@@ -3,9 +3,19 @@
   "version": "1.0.0",
   "description": "Attach hidden state to object instances",
   "license": "MIT",
+  "main": "cjs/hidden-state.js",
+  "module": "src/hidden-state.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/zenparsing/hidden-state.git"
   },
-  "homepage": "https://github.com/zenparsing/hidden-state"
+  "homepage": "https://github.com/zenparsing/hidden-state",
+  "devDependencies": {
+    "annotated": "^0.2.0"
+  },
+  "scripts": {
+    "build": "annotated src -o cjs -m",
+    "test": "node -r annotated test",
+    "prepublishOnly": "npm test && npm run build"
+  }
 }

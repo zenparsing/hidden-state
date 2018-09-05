@@ -1,8 +1,4 @@
-'use strict';
-
-module.exports = hiddenState;
-
-function hiddenState(description = '') {
+export default function hiddenState(description = '') {
   const map = new WeakMap();
 
   function hidden(obj, data) {
@@ -17,7 +13,7 @@ function hiddenState(description = '') {
       }
     }
     return data;
-  };
+  }
 
   hidden.hasState = (obj => map.has(obj));
 

@@ -1,5 +1,5 @@
-const hiddenState = require('./');
-const assert = require('assert');
+import hiddenState from '../src/hidden-state.js';
+import * as assert from 'assert';
 
 {
   let hidden = hiddenState();
