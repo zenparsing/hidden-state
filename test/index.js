@@ -4,16 +4,8 @@ import * as assert from 'assert';
 {
   let hidden = hiddenState();
   let obj = {};
-
-  hidden(obj, {
-    x: 1,
-    y: 2,
-  });
-
-  assert.deepEqual(hidden(obj), {
-    x: 1,
-    y: 2,
-  });
+  hidden(obj, { x: 1, y: 2 });
+  assert.deepEqual(hidden(obj), { x: 1, y: 2 });
 }
 
 {
@@ -74,4 +66,17 @@ import * as assert from 'assert';
     assert.equal(err.name, 'TypeError');
     assert.ok(err.message.includes('Point'));
   }
+}
+
+{
+  // This test patches globals - it should be executed last
+  WeakMap.prototype.get = function() { throw new Error(); };
+  WeakMap.prototype.get = function() { throw new Error(); };
+  WeakMap.prototype.has = function() { throw new Error(); };
+  global.WeakMap = function() {};
+
+  let hidden = hiddenState();
+  let obj = {};
+  hidden(obj, { x: 1, y: 2 });
+  assert.deepEqual(hidden(obj), { x: 1, y: 2 });
 }

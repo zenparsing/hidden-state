@@ -16,6 +16,8 @@
   "scripts": {
     "build": "annotated src -o cjs -m",
     "test": "node -r annotated test",
+    "perf": "node -r annotated test/perf.js",
     "prepublishOnly": "npm test && npm run build"
-  }
+  },
+  "dependencies": {}
 }

@@ -1,11 +1,17 @@
+const WM = WeakMap;
+
+const [$get, $set, $has] = ['get', 'set', 'has'].map(
+  name => Function.prototype.call.bind(WM.prototype[name])
+);
+
 export default function hiddenState(description = '') {
-  const map = new WeakMap();
+  const map = new WM();
 
   function hidden(obj, data) {
     if (data !== undefined) {
-      map.set(obj, data);
+      $set(map, obj, data);
     } else {
-      data = map.get(obj);
+      data = $get(map, obj);
       if (data === undefined) {
         throw new TypeError(
           `Object is not a valid instance of ${ description || 'this type' }`
@@ -15,7 +21,7 @@ export default function hiddenState(description = '') {
     return data;
   }
 
-  hidden.hasState = (obj => map.has(obj));
+  hidden.hasState = (obj => $has(map, obj));
 
   return hidden;
 }
