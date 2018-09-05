@@ -1,0 +1,11 @@
+{
+  "name": "hidden-state",
+  "version": "1.0.0",
+  "description": "Attach hidden state to object instances",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zenparsing/hidden-state.git"
+  },
+  "homepage": "https://github.com/zenparsing/hidden-state"
+}
