@@ -72,7 +72,6 @@ import * as assert from 'assert';
   // This test patches globals - it should be executed last
   WeakMap.prototype.get = function() { throw new Error(); };
   WeakMap.prototype.get = function() { throw new Error(); };
-  WeakMap.prototype.has = function() { throw new Error(); };
   global.WeakMap = function() {};
 
   let hidden = hiddenState();
