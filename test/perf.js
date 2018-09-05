@@ -28,6 +28,15 @@ function measure(msg, fn) {
 }
 
 {
+  let obj = {};
+  obj.x = 0;
+
+  measure('string properties', () => {
+    obj.x = Math.random();
+  });
+}
+
+{
   const hidden = hiddenState();
 
   let obj = {};
