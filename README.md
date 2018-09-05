@@ -33,6 +33,12 @@ class Point {
 }
 ```
 
+## Install
+
+```sh
+npm install hidden-state
+```
+
 ## API
 
 ### `hiddenState(description?)`
