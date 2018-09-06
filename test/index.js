@@ -1,6 +1,8 @@
 import hiddenState from '../src/hidden-state.js';
 import * as assert from 'assert';
 
+// Get/set
+
 {
   let hidden = hiddenState();
   let obj = {};
@@ -12,10 +14,26 @@ import * as assert from 'assert';
   let hidden = hiddenState();
   let obj = {};
 
-  assert.throws(() => {
-    hidden(obj);
-  });
+  assert.throws(() => hidden(obj));
 }
+
+// Proxies/prototyping
+
+{
+  let hidden = hiddenState();
+  let obj = {};
+  hidden(obj, { x: 1 });
+  assert.throws(() => hidden(new Proxy(obj, {})));
+}
+
+{
+  let hidden = hiddenState();
+  let obj = {};
+  hidden(obj, { x: 1 });
+  assert.throws(() => hidden(Object.create(obj)));
+}
+
+// hasState
 
 {
   let hidden = hiddenState();
