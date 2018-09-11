@@ -1,3 +1,11 @@
+/*
+
+This implementation is not hidden, since Reflect.ownKeys can be used
+to obtain a list of symbol names installed on the object. If Symbol.private()
+ever becomes a thing, this implementation will be preferred over WeakMap.
+
+*/
+
 export default function hiddenState(description = '') {
   const $data = Symbol();
   const $brand = Symbol();
