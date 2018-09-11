@@ -1,4 +1,5 @@
 import hiddenState from '../src/hidden-state.js';
+import hiddenStateSymbols from '../src/hidden-state-symbols.js';
 import { performance } from 'perf_hooks';
 
 function measure(msg, fn) {
@@ -33,6 +34,17 @@ function measure(msg, fn) {
 
   measure('string properties', () => {
     obj.x = Math.random();
+  });
+}
+
+{
+  const hidden = hiddenStateSymbols();
+
+  let obj = {};
+  hidden(obj, { x: 0 });
+
+  measure('hidden state symbols', () => {
+    hidden(obj).x = Math.random();
   });
 }
 
