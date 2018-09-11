@@ -76,6 +76,8 @@ import * as assert from 'assert';
 
   assert.equal(new Point().add(new Point(3, 4)).toString(), '<3:4>');
   assert.equal(Point.isPoint(new Point()), true);
+  assert.equal(Point.isPoint({}), false);
+  assert.equal(Point.isPoint(Object.create(new Point())), false);
 
   try {
     Point.prototype.toString.call({});

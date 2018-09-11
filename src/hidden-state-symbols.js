@@ -7,25 +7,25 @@ ever becomes a thing, this implementation will be preferred over WeakMap.
 */
 
 export default function hiddenState(description = '') {
-  const $data = Symbol();
-  const $brand = Symbol();
+  const Data = Symbol();
+  const Ref = Symbol();
 
   function hidden(obj, data) {
     if (data !== undefined) {
-      obj[$brand] = obj;
-      obj[$data] = data;
+      obj[Ref] = obj;
+      obj[Data] = data;
     } else {
-      if (obj[$brand] !== obj) {
+      if (obj[Ref] !== obj) {
         throw new TypeError(
           `Object is not a valid instance of ${ description || 'this type' }`
         );
       }
-      data = obj[$data];
+      data = obj[Data];
     }
     return data;
   }
 
-  hidden.hasState = (obj => obj[$brand] === obj);
+  hidden.hasState = (obj => obj[Ref] === obj);
 
   return hidden;
 }
