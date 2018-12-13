@@ -11,7 +11,7 @@
   },
   "homepage": "https://github.com/zenparsing/hidden-state",
   "devDependencies": {
-    "annotated": "^0.3.4"
+    "annotated": "^0.3.7"
   },
   "scripts": {
     "build": "annotated src -o cjs -m",
