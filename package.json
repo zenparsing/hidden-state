@@ -11,12 +11,12 @@
   },
   "homepage": "https://github.com/zenparsing/hidden-state",
   "devDependencies": {
-    "annotated": "^0.3.7"
+    "@zenparsing/skert": "0.0.7"
   },
   "scripts": {
-    "build": "annotated src -o cjs -m",
-    "test": "node -r annotated test",
-    "perf": "node -r annotated test/perf.js",
+    "build": "skertc src -o cjs --transform-modules",
+    "test": "node -r @zenparsing/skert/loader test",
+    "perf": "node -r @zenparsing/skert/loader test/perf.js",
     "prepublishOnly": "npm test && npm run build"
   },
   "dependencies": {}
