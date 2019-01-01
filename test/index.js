@@ -49,6 +49,13 @@ import * as assert from 'assert';
 }
 
 {
+  let hidden = hiddenState();
+  let obj = {};
+  hidden(obj, undefined);
+  assert.equal(hidden.hasState(obj), true);
+}
+
+{
   const hidden = hiddenState('Point');
 
   class Point {
@@ -92,10 +99,12 @@ import * as assert from 'assert';
   // This test patches globals - it should be executed last
   WeakMap.prototype.get = function() { throw new Error(); };
   WeakMap.prototype.get = function() { throw new Error(); };
+  WeakMap.prototype.has = function() { throw new Error(); };
   global.WeakMap = function() {};
 
   let hidden = hiddenState();
   let obj = {};
   hidden(obj, { x: 1, y: 2 });
   assert.deepEqual(hidden(obj), { x: 1, y: 2 });
+  assert.deepEqual(hidden.hasState(obj), true);
 }

@@ -1,14 +1,16 @@
 const WM = WeakMap;
 
-const [$get, $set] = ['get', 'set'].map(
+const [$get, $set, $has] = ['get', 'set', 'has'].map(
   name => Function.prototype.call.bind(WM.prototype[name])
 );
 
 export default function hiddenState(description = '') {
   const map = new WM();
 
-  function hidden(obj, data) {
-    if (data !== undefined) {
+  function hidden(obj, ...args) {
+    let data;
+    if (args.length > 0) {
+      data = args[0];
       $set(map, obj, data);
     } else {
       data = $get(map, obj);
@@ -21,7 +23,7 @@ export default function hiddenState(description = '') {
     return data;
   }
 
-  hidden.hasState = (obj => $get(map, obj) !== undefined);
+  hidden.hasState = (obj => $has(map, obj));
 
   return hidden;
 }
