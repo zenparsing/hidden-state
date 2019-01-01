@@ -14,7 +14,7 @@
     "@zenparsing/skert": "0.0.7"
   },
   "scripts": {
-    "build": "skertc src -o cjs --transform-modules",
+    "build": "skertc src -o cjs --cjs",
     "test": "node -r @zenparsing/skert/loader test",
     "perf": "node -r @zenparsing/skert/loader test/perf.js",
     "prepublishOnly": "npm test && npm run build"
