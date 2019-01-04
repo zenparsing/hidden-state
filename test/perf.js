@@ -1,5 +1,4 @@
-import hiddenState from '../src/hidden-state.js';
-import hiddenStateSymbols from '../src/hidden-state-symbols.js';
+import { hiddenState } from '../src/hidden-state.js';
 import { performance } from 'perf_hooks';
 
 function measure(msg, fn) {
@@ -38,23 +37,12 @@ function measure(msg, fn) {
 }
 
 {
-  const hidden = hiddenStateSymbols();
+  const [getState, setState] = hiddenState();
 
   let obj = {};
-  hidden(obj, { x: 0 });
-
-  measure('hidden state symbols', () => {
-    hidden(obj).x = Math.random();
-  });
-}
-
-{
-  const hidden = hiddenState();
-
-  let obj = {};
-  hidden(obj, { x: 0 });
+  setState(obj, { x: 0 });
 
   measure('hidden state', () => {
-    hidden(obj).x = Math.random();
+    getState(obj).x = Math.random();
   });
 }

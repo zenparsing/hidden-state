@@ -51,8 +51,8 @@ import * as assert from 'assert';
 {
   let hidden = hiddenState();
   let obj = {};
-  hidden(obj, undefined);
-  assert.equal(hidden.hasState(obj), true);
+  assert.throws(() => hidden(obj, undefined));
+  assert.equal(hidden.hasState(obj), false);
 }
 
 {
