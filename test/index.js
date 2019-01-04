@@ -1,82 +1,82 @@
-import hiddenState from '../src/hidden-state.js';
+import { hiddenState } from '../src/hidden-state.js';
 import * as assert from 'assert';
 
 // Get/set
 
 {
-  let hidden = hiddenState();
+  let [getState, setState] = hiddenState();
   let obj = {};
-  hidden(obj, { x: 1, y: 2 });
-  assert.deepEqual(hidden(obj), { x: 1, y: 2 });
+  setState(obj, { x: 1, y: 2 });
+  assert.deepEqual(getState(obj), { x: 1, y: 2 });
 }
 
 {
-  let hidden = hiddenState();
+  let [getState] = hiddenState();
   let obj = {};
 
-  assert.throws(() => hidden(obj));
+  assert.throws(() => getState(obj));
 }
 
 // Proxies/prototyping
 
 {
-  let hidden = hiddenState();
+  let [getState, setState] = hiddenState();
   let obj = {};
-  hidden(obj, { x: 1 });
-  assert.throws(() => hidden(new Proxy(obj, {})));
+  setState(obj, { x: 1 });
+  assert.throws(() => getState(new Proxy(obj, {})));
 }
 
 {
-  let hidden = hiddenState();
+  let [getState, setState] = hiddenState();
   let obj = {};
-  hidden(obj, { x: 1 });
-  assert.throws(() => hidden(Object.create(obj)));
+  setState(obj, { x: 1 });
+  assert.throws(() => getState(Object.create(obj)));
 }
 
 // hasState
 
 {
-  let hidden = hiddenState();
+  let [, setState, hasState] = hiddenState();
   let obj = {};
-  hidden(obj, {});
-  assert.equal(hidden.hasState(obj), true);
+  setState(obj, {});
+  assert.equal(hasState(obj), true);
 }
 
 {
-  let hidden = hiddenState();
+  let [,, hasState] = hiddenState();
   let obj = {};
-  assert.equal(hidden.hasState(obj), false);
+  assert.equal(hasState(obj), false);
 }
 
 {
-  let hidden = hiddenState();
+  let [, setState, hasState] = hiddenState();
   let obj = {};
-  assert.throws(() => hidden(obj, undefined));
-  assert.equal(hidden.hasState(obj), false);
+  assert.throws(() => setState(obj, undefined));
+  assert.equal(hasState(obj), false);
 }
 
 {
-  const hidden = hiddenState('Point');
+  const [getState, setState, hasState] = hiddenState('Point');
 
   class Point {
 
     constructor(x = 0, y = 0) {
-      hidden(this, { x, y });
+      setState(this, { x, y });
     }
 
     toString() {
-      let { x, y } = hidden(this);
+      let { x, y } = getState(this);
       return `<${ x }:${ y }>`;
     }
 
     add(point) {
-      let { x: x1, y: y1 } = hidden(this);
-      let { x: x2, y: y2 } = hidden(point);
+      let { x: x1, y: y1 } = getState(this);
+      let { x: x2, y: y2 } = getState(point);
       return new Point(x1 + x2, y1 + y2);
     }
 
     static isPoint(obj) {
-      return hidden.hasState(obj);
+      return hasState(obj);
     }
 
   }
@@ -102,9 +102,9 @@ import * as assert from 'assert';
   WeakMap.prototype.has = function() { throw new Error(); };
   global.WeakMap = function() {};
 
-  let hidden = hiddenState();
+  let [getState, setState, hasState] = hiddenState();
   let obj = {};
-  hidden(obj, { x: 1, y: 2 });
-  assert.deepEqual(hidden(obj), { x: 1, y: 2 });
-  assert.deepEqual(hidden.hasState(obj), true);
+  setState(obj, { x: 1, y: 2 });
+  assert.deepEqual(getState(obj), { x: 1, y: 2 });
+  assert.deepEqual(hasState(obj), true);
 }
