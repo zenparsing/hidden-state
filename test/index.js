@@ -56,6 +56,13 @@ import * as assert from 'assert';
 }
 
 {
+  let [, setState] = hiddenState();
+  let obj = {};
+  setState(obj, {});
+  assert.throws(() => setState(obj, {}));
+}
+
+{
   const [getState, setState, hasState] = hiddenState('Point');
 
   class Point {

@@ -22,6 +22,9 @@ export function hiddenState(typeName = '') {
     if (data === undefined) {
       throw new TypeError('Hidden state cannot be undefined');
     }
+    if ($get(map, obj) !== undefined) {
+      throw new Error('Cannot overwrite existing hidden state');
+    }
     $set(map, obj, data);
   }
 
