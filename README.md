@@ -7,12 +7,12 @@ Attach hidden state to object instances.
 ```js
 import { hiddenState } from 'hidden-state';
 
-const [getState, setState, hasState] = hiddenState('Point');
+const [getState, initState, hasState] = hiddenState('Point');
 
 class Point {
 
   constructor(x, y) {
-    setState(this, { x, y });
+    initState(this, { x, y });
   }
 
   toString() {
@@ -46,7 +46,7 @@ npm install hidden-state
 Returns an array containing functions that can be used to access the hidden state of an object. The optional `typeName` argument is used to customize `TypeError` messages.
 
 ```js
-const [getState, setState, hasState] = hiddenState('MyType');
+const [getState, initState, hasState] = hiddenState('MyType');
 ```
 
 The following functions are returned:
@@ -55,9 +55,9 @@ The following functions are returned:
 
 Returns the hidden state associated with the specified object. If the object does not have hidden state then a `TypeError` is thrown.
 
-#### `setState(obj, state)`
+#### `initState(obj, state)`
 
-Initializes the hidden state for an object. A `TypeError` is thrown if `state` is **undefined**.
+Initializes the hidden state for an object. A `TypeError` is thrown if `state` is **undefined**. An `Error` is thrown if hidden state has previously been initialized for the object.
 
 #### `hasState(obj)`
 

@@ -18,7 +18,7 @@ export function hiddenState(typeName = '') {
     return state;
   }
 
-  function setState(obj, data) {
+  function initState(obj, data) {
     if (data === undefined) {
       throw new TypeError('Hidden state cannot be undefined');
     }
@@ -32,15 +32,15 @@ export function hiddenState(typeName = '') {
     return $get(map, obj) !== undefined;
   }
 
-  return [getState, setState, hasState];
+  return [getState, initState, hasState];
 }
 
 // #[deprecated]
 export default function(typeName) {
-  let [getState, setState, hasState] = hiddenState(typeName);
+  let [getState, initState, hasState] = hiddenState(typeName);
 
   function hidden(obj, ...args) {
-    return args.length > 0 ? setState(obj, args[0]) : getState(obj);
+    return args.length > 0 ? initState(obj, args[0]) : getState(obj);
   }
 
   hidden.hasState = hasState;

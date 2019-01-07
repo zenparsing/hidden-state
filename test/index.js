@@ -4,9 +4,9 @@ import * as assert from 'assert';
 // Get/set
 
 {
-  let [getState, setState] = hiddenState();
+  let [getState, initState] = hiddenState();
   let obj = {};
-  setState(obj, { x: 1, y: 2 });
+  initState(obj, { x: 1, y: 2 });
   assert.deepEqual(getState(obj), { x: 1, y: 2 });
 }
 
@@ -20,25 +20,25 @@ import * as assert from 'assert';
 // Proxies/prototyping
 
 {
-  let [getState, setState] = hiddenState();
+  let [getState, initState] = hiddenState();
   let obj = {};
-  setState(obj, { x: 1 });
+  initState(obj, { x: 1 });
   assert.throws(() => getState(new Proxy(obj, {})));
 }
 
 {
-  let [getState, setState] = hiddenState();
+  let [getState, initState] = hiddenState();
   let obj = {};
-  setState(obj, { x: 1 });
+  initState(obj, { x: 1 });
   assert.throws(() => getState(Object.create(obj)));
 }
 
 // hasState
 
 {
-  let [, setState, hasState] = hiddenState();
+  let [, initState, hasState] = hiddenState();
   let obj = {};
-  setState(obj, {});
+  initState(obj, {});
   assert.equal(hasState(obj), true);
 }
 
@@ -49,26 +49,26 @@ import * as assert from 'assert';
 }
 
 {
-  let [, setState, hasState] = hiddenState();
+  let [, initState, hasState] = hiddenState();
   let obj = {};
-  assert.throws(() => setState(obj, undefined));
+  assert.throws(() => initState(obj, undefined));
   assert.equal(hasState(obj), false);
 }
 
 {
-  let [, setState] = hiddenState();
+  let [, initState] = hiddenState();
   let obj = {};
-  setState(obj, {});
-  assert.throws(() => setState(obj, {}));
+  initState(obj, {});
+  assert.throws(() => initState(obj, {}));
 }
 
 {
-  const [getState, setState, hasState] = hiddenState('Point');
+  const [getState, initState, hasState] = hiddenState('Point');
 
   class Point {
 
     constructor(x = 0, y = 0) {
-      setState(this, { x, y });
+      initState(this, { x, y });
     }
 
     toString() {
@@ -109,9 +109,9 @@ import * as assert from 'assert';
   WeakMap.prototype.has = function() { throw new Error(); };
   global.WeakMap = function() {};
 
-  let [getState, setState, hasState] = hiddenState();
+  let [getState, initState, hasState] = hiddenState();
   let obj = {};
-  setState(obj, { x: 1, y: 2 });
+  initState(obj, { x: 1, y: 2 });
   assert.deepEqual(getState(obj), { x: 1, y: 2 });
   assert.deepEqual(hasState(obj), true);
 }

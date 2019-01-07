@@ -37,10 +37,10 @@ function measure(msg, fn) {
 }
 
 {
-  const [getState, setState] = hiddenState();
+  const [getState, initState] = hiddenState();
 
   let obj = {};
-  setState(obj, { x: 0 });
+  initState(obj, { x: 0 });
 
   measure('hidden state', () => {
     getState(obj).x = Math.random();
